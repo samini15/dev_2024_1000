@@ -4,8 +4,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.dev_2024_1000.core.domain.util.onSuccess
+import com.example.dev_2024_1000.meal.domain.MealDataSource
+import com.example.dev_2024_1000.meal.presentation.model.toMealUI
+import kotlinx.coroutines.launch
 
-class MealSearchViewModel: ViewModel() {
+class MealSearchViewModel(
+    private val mealDataSource: MealDataSource
+): ViewModel() {
 
     var state by mutableStateOf(MealSearchState())
         private set
@@ -23,7 +30,14 @@ class MealSearchViewModel: ViewModel() {
             else -> Unit
         }
     }
-    private fun executeSearch() {
-
+    private fun executeSearch() = viewModelScope.launch {
+        mealDataSource
+            .searchMeals(state.searchQuery)
+            .onSuccess { meals ->
+                state = state.copy(meals = meals.map { it.toMealUI() })
+            }
+            /*.onError {
+                state = state.copy(error = it)
+            }*/
     }
 }
