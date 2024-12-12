@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.Dev_2024_1000" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/background</item>
+        <item name="postSplashScreenTheme">@style/Theme.Dev_2024_1000</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/splash_meal</item>
+    </style>
+</resources>
