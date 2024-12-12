@@ -7,4 +7,11 @@
     <string name="filter_by_ingredient">Filter by Ingredient</string>
     <string name="click_on_the_button_above_to_filter_based_on_a_specific_ingredient">Click on the button above to filter based on a specific ingredient</string>
     <string name="show_random_meal">Show a random meal</string>
+
+    <!-- Network Errors -->
+    <string name="error_request_timeout">Request timed out</string>
+    <string name="error_too_many_requests">Oops, it looks like that your quota exceeded!</string>
+    <string name="error_no_internet_connection">Couldn\'t connect to the server, please check your internet connection!</string>
+    <string name="error_unknown">Something went wrong, please try later.</string>
+    <string name="error_serialization">Couldn\'t serialize or deserialize data.</string>
 </resources>
