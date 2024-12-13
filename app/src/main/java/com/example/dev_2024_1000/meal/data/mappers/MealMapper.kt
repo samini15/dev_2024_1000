@@ -7,6 +7,8 @@ fun MealDto.toMeal(): Meal {
     return Meal(
         idMeal = idMeal,
         strMeal = strMeal,
-        strMealThumb = strMealThumb
+        strMealThumb = strMealThumb,
+        strTags = strTags,
+        strYoutube = strYoutube
     )
 }

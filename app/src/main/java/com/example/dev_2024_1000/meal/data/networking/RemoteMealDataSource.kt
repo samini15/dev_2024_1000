@@ -50,4 +50,12 @@ class RemoteMealDataSource(
             response.meals.map { it.toMeal() }
         }
     }
+
+    override suspend fun getMealById(mealId: String): Result<List<Meal>, NetworkError> {
+        return safeCall<MealsResponseDto> {
+            httpClient.get(urlString = constructUrl("lookup.php?i=$mealId"))
+        }.map { response ->
+            response.meals.map { it.toMeal() }
+        }
+    }
 }

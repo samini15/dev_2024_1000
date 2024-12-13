@@ -9,4 +9,6 @@ sealed interface MealSearchAction {
     data class OnIngredientSelected(val ingredient: String): MealSearchAction
 
     object OnRandomMealClick: MealSearchAction
+
+    data class OnMealClick(val idMeal: String): MealSearchAction
 }

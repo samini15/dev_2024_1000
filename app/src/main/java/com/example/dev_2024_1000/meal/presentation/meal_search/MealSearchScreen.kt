@@ -146,7 +146,9 @@ fun MealSearchScreen(
                 items(state.meals) { meal ->
                     MealItem(
                         mealUI = meal,
-                        onClick = { /*TODO*/ }
+                        onClick = {
+                            onAction(MealSearchAction.OnMealClick(meal.idMeal))
+                        }
                     )
                 }
             }
