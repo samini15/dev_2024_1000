@@ -42,11 +42,13 @@ class MealSearchViewModel(
             }
 
             is MealSearchAction.OnIngredientSelected -> {
-                state = state.copy(selectedIngredient = action.ingredient)
+                filterMealsByIngredient(action.ingredient)
             }
+
             else -> Unit
         }
     }
+
     private fun executeSearch() = viewModelScope.launch {
         state = state.copy(
             isSearching = true,
@@ -68,6 +70,14 @@ class MealSearchViewModel(
             .getIngredients()
             .onSuccess { ingredients ->
                 state = state.copy(ingredients = ingredients.map { it.toIngredientUi() })
+            }
+    }
+
+    private fun filterMealsByIngredient(ingredient: String) = viewModelScope.launch {
+        mealDataSource
+            .filterMealsByIngredient(ingredient)
+            .onSuccess {
+                state = state.copy(meals = it.map { it.toMealUI() })
             }
     }
 }

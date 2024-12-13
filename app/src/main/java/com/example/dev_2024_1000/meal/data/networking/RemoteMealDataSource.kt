@@ -34,4 +34,12 @@ class RemoteMealDataSource(
             response.meals.map { it.toIngredient() }
         }
     }
+
+    override suspend fun filterMealsByIngredient(ingredient: String): Result<List<Meal>, NetworkError> {
+        return safeCall<MealsResponseDto> {
+            httpClient.get(urlString = constructUrl("filter.php?i=$ingredient"))
+        }.map { response ->
+            response.meals.map { it.toMeal() }
+        }
+    }
 }

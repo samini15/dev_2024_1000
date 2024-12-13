@@ -1,14 +1,12 @@
 package com.example.dev_2024_1000.meal.presentation.meal_search.components
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.snapping.SnapPosition
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -39,7 +37,7 @@ fun IngredientItem(
         modifier = modifier
             .fillMaxWidth()
             .clickable {
-                onClick
+                onClick()
             },
         verticalAlignment = Alignment.CenterVertically
     ) {
