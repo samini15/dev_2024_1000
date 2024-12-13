@@ -4,8 +4,10 @@ package com.example.dev_2024_1000.meal.presentation.meal_search
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -17,11 +19,18 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -30,7 +39,9 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.dev_2024_1000.R
+import com.example.dev_2024_1000.meal.presentation.meal_search.components.IngredientItem
 import com.example.dev_2024_1000.meal.presentation.meal_search.components.MealItem
 import com.example.dev_2024_1000.ui.theme.Dev_2024_1000Theme
 import com.example.dev_2024_1000.ui.theme.LocalSpacing
@@ -45,6 +56,12 @@ fun MealSearchScreen(
     val keyboardController = LocalSoftwareKeyboardController.current
 
     val scrollBehaviour = TopAppBarDefaults.pinnedScrollBehavior()
+
+    // BottomSheet
+    val sheetState = rememberModalBottomSheetState()
+    var isBottomSheetOpen by rememberSaveable {
+        mutableStateOf(false)
+    }
 
     Scaffold(
         modifier = Modifier
@@ -68,6 +85,7 @@ fun MealSearchScreen(
         ) {
             SearchBar(
                 modifier = Modifier
+                    .fillMaxWidth()
                     .padding(start = spacing.spaceMedium, end = spacing.spaceMedium),
                 query = state.searchQuery,
                 onQueryChange = { onAction(MealSearchAction.OnSearchQueryChanged(it)) },
@@ -85,7 +103,12 @@ fun MealSearchScreen(
                     }
                 },
                 trailingIcon = {
-                    IconButton(onClick = { onAction(MealSearchAction.OnSearchMeal) }) {
+                    IconButton(
+                        onClick = {
+                            isBottomSheetOpen = true
+                            onAction(MealSearchAction.OnFilterByIngredientClick)
+                        }
+                    ) {
                         Icon(
                             imageVector = Icons.Filled.FilterList,
                             contentDescription = stringResource(id = R.string.search)
@@ -118,6 +141,43 @@ fun MealSearchScreen(
                         mealUI = meal,
                         onClick = { /*TODO*/ }
                     )
+                }
+            }
+
+            if (isBottomSheetOpen) {
+                ModalBottomSheet(
+                    onDismissRequest = { isBottomSheetOpen = false },
+                    sheetState = sheetState
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(spacing.spaceMedium),
+                        horizontalAlignment = Alignment.Start
+                    ) {
+                        Text(
+                            text = stringResource(R.string.filter_by_ingredient),
+                            color = MaterialTheme.colorScheme.onSurface,
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = MaterialTheme.typography.titleLarge.fontWeight,
+                            fontSize = 18.sp
+                        )
+                        Spacer(modifier = Modifier.height(spacing.spaceMedium))
+                        Text(
+                            text = stringResource(R.string.select_specific_ingredient),
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+
+                        LazyColumn {
+                            items(state.ingredients) { ingredient ->
+                                IngredientItem(ingredientUi = ingredient) {
+                                    onAction(MealSearchAction.OnIngredientSelected(ingredient.strIngredient))
+                                    isBottomSheetOpen = false
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

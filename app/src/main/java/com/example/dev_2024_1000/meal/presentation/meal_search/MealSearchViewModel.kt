@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.dev_2024_1000.core.domain.util.onSuccess
 import com.example.dev_2024_1000.meal.domain.MealDataSource
+import com.example.dev_2024_1000.meal.presentation.model.toIngredientUi
 import com.example.dev_2024_1000.meal.presentation.model.toMealUI
 import kotlinx.coroutines.launch
 
@@ -34,6 +35,15 @@ class MealSearchViewModel(
             is MealSearchAction.OnSearchMeal -> {
                 executeSearch()
             }
+
+            // Filter by ingredient
+            is MealSearchAction.OnFilterByIngredientClick -> {
+                loadIngredients()
+            }
+
+            is MealSearchAction.OnIngredientSelected -> {
+                state = state.copy(selectedIngredient = action.ingredient)
+            }
             else -> Unit
         }
     }
@@ -51,5 +61,13 @@ class MealSearchViewModel(
             /*.onError {
                 state = state.copy(error = it)
             }*/
+    }
+
+    private fun loadIngredients() = viewModelScope.launch {
+        mealDataSource
+            .getIngredients()
+            .onSuccess { ingredients ->
+                state = state.copy(ingredients = ingredients.map { it.toIngredientUi() })
+            }
     }
 }

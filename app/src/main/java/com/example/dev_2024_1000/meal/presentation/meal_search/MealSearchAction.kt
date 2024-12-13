@@ -4,4 +4,7 @@ sealed interface MealSearchAction {
     object OnSearchMeal : MealSearchAction
     data class OnSearchQueryChanged(val query: String) : MealSearchAction
     data class OnSearchActiveChanged(val isActive: Boolean): MealSearchAction
+
+    object OnFilterByIngredientClick: MealSearchAction
+    data class OnIngredientSelected(val ingredient: String): MealSearchAction
 }

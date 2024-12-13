@@ -5,7 +5,7 @@
     <string name="search">search\n</string>
     <string name="please_enter_your_meal_name_to_search">Please enter your meal name to start searching</string>
     <string name="filter_by_ingredient">Filter by Ingredient</string>
-    <string name="click_on_the_button_above_to_filter_based_on_a_specific_ingredient">Click on the button above to filter based on a specific ingredient</string>
+    <string name="select_specific_ingredient">Choose an ingredient to filter the list of meals.</string>
     <string name="show_random_meal">Show a random meal</string>
 
     <!-- Network Errors -->

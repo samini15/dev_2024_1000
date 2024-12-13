@@ -24,6 +24,7 @@ android {
     buildTypes {
         debug {
             buildConfigField("String", "BASE_URL", "\"https://www.themealdb.com/api/json/v1/1/\"")
+            buildConfigField("String", "INGREDIENT_IMAGE_URL", "\"https://www.themealdb.com/images/ingredients/\"")
         }
         release {
             isMinifyEnabled = false
@@ -32,6 +33,7 @@ android {
                 "proguard-rules.pro"
             )
             buildConfigField("String", "BASE_URL", "\"https://www.themealdb.com/api/json/v1/1/\"")
+            buildConfigField("String", "INGREDIENT_IMAGE_URL", "\"https://www.themealdb.com/images/ingredients/\"")
         }
     }
     compileOptions {
