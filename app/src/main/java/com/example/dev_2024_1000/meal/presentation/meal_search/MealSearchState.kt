@@ -12,5 +12,8 @@ data class MealSearchState(
     // Filter by ingredient
     val ingredients: List<IngredientUi> = emptyList(),
 
+    // Generate meals
+    val shouldStopGeneratingMeals: Boolean = false,
+
     val meals: List<MealUI> = emptyList()
 )

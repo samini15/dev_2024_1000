@@ -42,4 +42,12 @@ class RemoteMealDataSource(
             response.meals.map { it.toMeal() }
         }
     }
+
+    override suspend fun generateRandomMeal(): Result<List<Meal>, NetworkError> {
+        return safeCall<MealsResponseDto> {
+            httpClient.get(urlString = constructUrl("random.php"))
+        }.map { response ->
+            response.meals.map { it.toMeal() }
+        }
+    }
 }

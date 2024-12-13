@@ -6,7 +6,7 @@
     <string name="please_enter_your_meal_name_to_search">Please enter your meal name to start searching</string>
     <string name="filter_by_ingredient">Filter by Ingredient</string>
     <string name="select_specific_ingredient">Choose an ingredient to filter the list of meals.</string>
-    <string name="show_random_meal">Show a random meal</string>
+    <string name="show_random_meal">Generate a random meal</string>
 
     <!-- Network Errors -->
     <string name="error_request_timeout">Request timed out</string>

@@ -35,7 +35,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
@@ -95,7 +94,11 @@ fun MealSearchScreen(
                     Text(stringResource(R.string.search_meal))
                 },
                 leadingIcon = {
-                    IconButton(onClick = { onAction(MealSearchAction.OnSearchMeal) }) {
+                    IconButton(
+                        onClick = {
+                            onAction(MealSearchAction.OnSearchMeal)
+                        }
+                    ) {
                         Icon(
                             imageVector = Icons.Filled.Search,
                             contentDescription = stringResource(id = R.string.search)
@@ -115,7 +118,9 @@ fun MealSearchScreen(
                         )
                     }
                 },
-                onSearch = { onAction(MealSearchAction.OnSearchMeal) },
+                onSearch = {
+                    onAction(MealSearchAction.OnSearchMeal)
+                },
                 tonalElevation = 20.dp
             ) {
                 onAction(MealSearchAction.OnSearchMeal)
@@ -130,7 +135,9 @@ fun MealSearchScreen(
                         start = spacing.spaceMedium,
                         end = spacing.spaceMedium
                     ),
-                onClick = { /*TODO*/ }
+                onClick = {
+                    onAction(MealSearchAction.OnRandomMealClick)
+                }
             ) {
                 Text(stringResource(R.string.show_random_meal))
             }
