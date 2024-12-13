@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -22,7 +23,7 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField("String", "BASE_URL", "\"www.themealdb.com/api/json/v1/1/\"")
+            buildConfigField("String", "BASE_URL", "\"https://www.themealdb.com/api/json/v1/1/\"")
         }
         release {
             isMinifyEnabled = false
@@ -30,7 +31,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField("String", "BASE_URL", "\"www.themealdb.com/api/json/v1/1/\"")
+            buildConfigField("String", "BASE_URL", "\"https://www.themealdb.com/api/json/v1/1/\"")
         }
     }
     compileOptions {
@@ -50,19 +51,14 @@ dependencies {
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
 
+    implementation(libs.bundles.compose)
     implementation(libs.bundles.koin)
     implementation(libs.bundles.ktor)
+    implementation(libs.coil.compose)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.core.splashscreen)
-    implementation(libs.androidx.lifecycle.runtime.compose)
-    implementation(libs.androidx.lifecycle.viewmodel.compose)
 
     // Test
     testImplementation(libs.junit)

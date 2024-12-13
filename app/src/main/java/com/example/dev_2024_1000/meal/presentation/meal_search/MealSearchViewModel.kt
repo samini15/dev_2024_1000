@@ -24,6 +24,13 @@ class MealSearchViewModel(
                 state = state.copy(searchQuery = action.query)
             }
 
+            is MealSearchAction.OnSearchActiveChanged -> {
+                state = state.copy(
+                    isHintVisible = !action.isActive && state.searchQuery.isBlank(),
+                    isSearching = action.isActive
+                )
+            }
+
             is MealSearchAction.OnSearchMeal -> {
                 executeSearch()
             }
@@ -31,6 +38,11 @@ class MealSearchViewModel(
         }
     }
     private fun executeSearch() = viewModelScope.launch {
+        state = state.copy(
+            isSearching = true,
+            meals = emptyList()
+        )
+
         mealDataSource
             .searchMeals(state.searchQuery)
             .onSuccess { meals ->
