@@ -1,19 +1,24 @@
 package com.example.dev_2024_1000.meal.data.networking
 
 import com.example.dev_2024_1000.core.data.networking.constructUrl
+import com.example.dev_2024_1000.core.data.networking.parseMealWithIngredientsAndMeasures
 import com.example.dev_2024_1000.core.data.networking.safeCall
 import com.example.dev_2024_1000.core.domain.util.NetworkError
 import com.example.dev_2024_1000.core.domain.util.Result
 import com.example.dev_2024_1000.core.domain.util.map
+import com.example.dev_2024_1000.meal.data.mappers.toDetailedMeal
 import com.example.dev_2024_1000.meal.data.mappers.toIngredient
 import com.example.dev_2024_1000.meal.data.mappers.toMeal
 import com.example.dev_2024_1000.meal.data.networking.dto.IngredientsResponseDto
 import com.example.dev_2024_1000.meal.data.networking.dto.MealsResponseDto
+import com.example.dev_2024_1000.meal.domain.DetailedMeal
 import com.example.dev_2024_1000.meal.domain.Ingredient
 import com.example.dev_2024_1000.meal.domain.Meal
 import com.example.dev_2024_1000.meal.domain.MealDataSource
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
+import io.ktor.client.statement.bodyAsText
+import org.json.JSONObject
 
 class RemoteMealDataSource(
     private val httpClient: HttpClient
@@ -51,11 +56,10 @@ class RemoteMealDataSource(
         }
     }
 
-    override suspend fun getMealById(mealId: String): Result<List<Meal>, NetworkError> {
-        return safeCall<MealsResponseDto> {
-            httpClient.get(urlString = constructUrl("lookup.php?i=$mealId"))
-        }.map { response ->
-            response.meals.map { it.toMeal() }
-        }
+    override suspend fun getMealById(mealId: String): Result<List<DetailedMeal>, NetworkError> {
+        val response = httpClient.get(urlString = constructUrl("lookup.php?i=$mealId"))
+        val jsonObject = JSONObject(response.bodyAsText())
+        val mealDto = parseMealWithIngredientsAndMeasures(jsonObject)
+        return Result.Success(listOf(mealDto.toDetailedMeal()))
     }
 }

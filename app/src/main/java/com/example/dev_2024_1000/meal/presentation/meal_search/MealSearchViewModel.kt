@@ -57,7 +57,9 @@ class MealSearchViewModel(
                 generateRandomMeal()
             }
 
-            is MealSearchAction.OnMealClick -> Unit
+            is MealSearchAction.OnMealClick -> {
+                stopGeneratingRandomMeals()
+            }
 
             else -> Unit
         }

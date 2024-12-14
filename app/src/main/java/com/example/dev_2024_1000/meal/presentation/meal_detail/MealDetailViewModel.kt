@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.dev_2024_1000.core.domain.util.onSuccess
 import com.example.dev_2024_1000.meal.domain.MealDataSource
-import com.example.dev_2024_1000.meal.presentation.model.toMealUI
+import com.example.dev_2024_1000.meal.presentation.model.toDetailedMealUI
 import kotlinx.coroutines.launch
 
 class MealDetailViewModel(
@@ -31,7 +31,7 @@ class MealDetailViewModel(
             mealDataSource
                 .getMealById(idMeal)
                 .onSuccess {
-                    state = state.copy(meal = it.map { it.toMealUI() }.first())
+                    state = state.copy(meal = it.map { it.toDetailedMealUI() }.first())
                 }
         }
     }

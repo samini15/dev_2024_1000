@@ -81,9 +81,7 @@ private fun MealItemPreview() {
             mealUI = MealUI(
                 idMeal = "1",
                 strMeal = "Spicy Arrabiata Penne",
-                strMealThumb = "https://cdn.pixabay.com/photo/2017/01/29/14/19/kermit-2018085_1280.jpg",
-                strTags = "Meat,Casserole",
-                strYoutube = "https://www.youtube.com/watch?v=4aZr5hZXP_s"
+                strMealThumb = "https://cdn.pixabay.com/photo/2017/01/29/14/19/kermit-2018085_1280.jpg"
             )
         ) {
 
